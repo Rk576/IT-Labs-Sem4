@@ -1,0 +1,33 @@
+; program to subtract two 128 bit numbers
+ AREA RESET , DATA, READONLY
+	EXPORT __Vectors
+__Vectors
+	DCD 0X10001000
+	DCD Reset_Handler
+	ALIGN 
+	AREA mycode, CODE, READONLY
+	ENTRY 
+	EXPORT Reset_Handler
+Reset_Handler
+	LDR R0 , =NUM1
+	LDR R1, =NUM2
+	LDR R2 ,=RES
+	ADD R0 ,R0 , #12
+	ADD R1, R1, #12
+	ADD R2, R2, #12
+	MOV R3 , #4 ; Loop counter
+LOOP
+	LDR R6, [R0] , #-4
+	LDR R7, [R1], #-4
+	SUBS R4,R6, R7
+	STR R4, [R2] , #-4
+	SBCS R4, R4, #0
+	SUBS R3, R3, #1
+	BNE LOOP
+STOP 
+	B STOP
+NUM1 DCD 0xF0101010,0xF1010101,0x10010011,0x00011011
+NUM2 DCD 0x10101010,0x12341234,0x10010011,0x00011011
+    AREA DATA, DATA, READWRITE
+RES DCD 0
+	END
