@@ -20,7 +20,7 @@ L1
 	SUBHI R2, R2, R3
 	SUBLO R3, R3, R2
 	CMP R2, #0
-	CMP R2, #0
+	CMP R3, #0
 	B L1
 L2	LDR R4, =RES
 	STR R2, [R4]
