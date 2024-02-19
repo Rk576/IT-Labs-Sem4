@@ -1,0 +1,28 @@
+	; 2 DIGIT HEX TO UNPACKED ASCII
+	AREA RESET, DATA, READONLY
+	EXPORT __Vectors
+__Vectors
+	DCD 0x40001000 ; stack pointer value when stack is empty
+	DCD Reset_Handler ; reset vector
+	ALIGN
+	AREA mycode, CODE, READONLY
+	ENTRY
+	EXPORT Reset_Handler
+Reset_Handler
+	
+	LDR R0, =NUM
+	LDR R1, [R0]
+	AND R2, R1, #0XF0
+	LSR R2, #4
+	CMP R2, #0X09
+	ADDHI R2, R2, #0X37
+	ADDLS R2, R2, #0X30
+	AND R3, R1, #0X0F
+	CMP R3, #0X9
+	ADDHI R3, R3, #0X37
+	ADDLS R3, R3, #0X30
+	
+NUM DCD 0x000003A
+	AREA data, DATA, READWRITE
+RESULT DCD 0
+	END
