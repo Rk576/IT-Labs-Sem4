@@ -1,0 +1,85 @@
+
+create table person(
+    driver_id varchar(30),
+    name varchar(50),
+    address varchar(100),
+    primary key (driver_id));
+    
+create table car(
+    regno varchar(20),
+    model varchar(30),
+    year int,
+    primary key(regno));
+    
+    create table accident(
+    report_number int,
+    accd_date date,
+    location varchar(50),
+    primary key(report_number));
+ create table owns(
+    driver_id varchar(30),
+    regno varchar(20),
+    primary key(driver_id , regno),
+    foreign key(driver_id) references person(driver_id),
+    foreign key(regno) references car(regno));
+
+ create table participated(
+     driver_id varchar(30),
+     regno varchar(20),
+     report_number int,
+     damage_amount int,
+     primary key(driver_id , regno , report_number),
+     foreign key(driver_id) references person(driver_id),
+     foreign key(regno) references car(regno),
+     foreign key(report_number) references accident(report_number));
+     
+insert into person values('GJ05 2019324', 'RUSHANK', 'VADODARA');
+ insert into person values('GJ01 2015478', 'ISHAN', 'SURAT');
+ insert into person values('DL11 9853147', 'PRANAV', 'DELHI');
+ insert into person values('MP07 2982145', 'YASH', 'INDORE');
+ insert into person values('MH07 2895341', 'SHREYASH', 'PUNE');
+insert into person values('MH06 2098531', 'PALIYA', 'AHMEDNAGAR');
+
+insert into car values('0007' , 'Koiensegg' , '2023');
+ insert into car values('0014' , 'Bugatti' , '2021');
+ insert into car values('1112' , 'Mercedes' , '2019');
+ insert into car values('7896' , 'BMW' , '2020');
+ insert into car values('2345' , 'G Wagon' , '2021');
+ insert into car values('4567' , 'alto' , '2012');
+
+ insert into accident values('1234', '2005-11-10', 'Dharavi');
+ insert into accident values('5678', '2006-10-14', 'Noida');
+ insert into accident values('91011', '2012-12-12', 'Patna');
+ insert into accident values('121314', '2016-08-15','Pune' );
+ insert into accident values('151617', '2016-06-18', 'Kolhapur');
+ insert into accident values('181920', '2005-11-22', 'Shirdi');
+
+ insert into owns values('GJ05 2019324','0007');
+ insert into owns values('GJ01 2015478','0014');
+ insert into owns values('DL11 9853147','1112');
+ insert into owns values('MP07 2982145','7896');
+ insert into owns values('MH07 2895341','2345');
+ insert into owns values('MH06 2098531','4567');
+
+ insert into participated values('GJ05 2019324','0007', '1234', '550000');
+ insert into participated values('GJ01 2015478','0014','5678','196000');
+ insert into participated values('DL11 9853147','1112','91011', '234000');
+ insert into participated values('MP07 2982145','7896', '121314', '165000');
+ insert into participated values('MH07 2895341','2345', '151617', '340000');
+ insert into participated values('MH06 2098531','4567', '181920', '20000');
+
+iii)
+update participated set damage_amount=25000 where (report_number='1234' and regno ='0007');
+
+iv)
+delete from participated where report_number in (select report_number from accident where extract(year from accd_date)=2012);
+delete from accident where extract(year from accd_date)=2012;
+select*from participated;
+select*from accident;
+v)
+alter table accident add (type varchar(50));
+alter table accident drop type;
+select*from accident;
+vi)
+alter table car add constraint chk check(year>2010);
+select*from car;
