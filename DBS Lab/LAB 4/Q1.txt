@@ -1,0 +1,29 @@
+select count(distinct driver_id)
+from participated
+where report_number in (select report_number from accident where extract(year from accd_date)=2005);
+
+select count(participated.regno) 
+from participated, car
+where participated.regno=car.regno and car.model='BMW';
+
+select name as OWNER_NAME , count(report_number) as NO_OF_ACCIDENTS, sum(damage_amount) as TOTAL_DAMAGE
+from person p
+join owns o on p.driver_id = o.driver_id
+join participated pt on o.regno = pt.regno
+group by p.name  
+order by total_damage desc;
+
+SELECT p.name
+FROM person p
+JOIN participated pt ON p.driver_id = pt.driver_id
+JOIN accident a ON pt.report_number = a.report_number
+where extract(year from a.accd_date)=2005
+GROUP BY p.name
+HAVING COUNT(pt.report_number) > 2;
+
+SELECT P.NAME
+FROM PERSON P
+JOIN OWNS O ON P.DRIVER_ID=O.DRIVER_ID
+JOIN PARTICIPATED PT ON O.REGNO=PT.REGNO
+WHERE PT.DRIVER_ID IS NULL;
+
