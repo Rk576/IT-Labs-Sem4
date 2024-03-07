@@ -1,0 +1,49 @@
+select c.cname
+from customer c
+inner join orders o on c.cust=o.cust
+where o.odate='2024-01-10';
+
+select orderr as ORDER_ID , sum(qty) as NO_OF_ITEMS
+from order_items
+group by orderr;
+
+select orderr as ORDER_ID , sum(qty) as NO_OF_ITEMS
+from order_items
+group by orderr
+order by NO_OF_ITEMS desc
+limit 1;
+
+select shipdate
+from shipment
+group by shipdate
+order by count(*) desc
+limit 1;
+
+delete from items
+where item=5;
+
+select o.orderr
+from orders o
+join shipment s on o.orderr=s.orderr
+join warehouse w on s.warehouse=w.warehouse
+where w.city='Chicago'
+group by o.orderr
+having count(distinct s.warehouse)=(select count(*) from warehouse where city='Chicago');
+
+select cname
+from customer
+where cname like '%D%';
+
+select c.cname, sum(o.ordamt) as TOTAL_AMT
+from customer c
+join orders o on c.cust=o.cust
+group by c.cname
+order by TOTAL_AMT desc;
+
+select c.cname
+from customer c
+join orders o on c.cust = o.cust
+join shipment s ON o.orderr = s.orderr
+where s.shipdate = '2024-04-30'
+group by c.cust
+having count(distinct o.orderr) >= 3;
