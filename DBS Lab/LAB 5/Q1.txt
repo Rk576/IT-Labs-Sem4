@@ -140,7 +140,7 @@ WHERE NOT EXISTS (
     LEFT JOIN BOOK_ADOPTION ba ON c.course = ba.course
     WHERE ba.book_isbn IS NULL 
     AND c.course IN (
-        SELECT e.course#
+        SELECT e.course
         FROM ENROLL e 
         WHERE e.regno = s.regno
     )
